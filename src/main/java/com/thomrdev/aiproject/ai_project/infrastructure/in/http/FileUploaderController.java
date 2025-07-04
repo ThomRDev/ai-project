@@ -14,14 +14,14 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("")
 @RequiredArgsConstructor
 public class FileUploaderController {
-
+    /*
     private final ExtractTextFromVideoUseCase extractTextFromVideoUseCase;
-
+*/
     @GetMapping("/")
     public String viewHome() {
         return "index";
     }
-
+/*
     @PostMapping("/upload")
     public String uploadVideo(@RequestParam("videoFile") MultipartFile file, Model model) {
 
@@ -36,5 +36,5 @@ public class FileUploaderController {
             model.addAttribute("errorMessage", "Error procesando el video: " + e.getMessage());
             return "index :: response";
         }
-    }
+    }*/
 }

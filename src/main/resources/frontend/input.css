@@ -1,0 +1,4 @@
+@import "tailwindcss";
+
+/* Indica a Tailwind dónde buscar clases en las plantillas Thymeleaf */
+@source "../templates/**/*.html";

@@ -2,11 +2,12 @@ package com.thomrdev.aiproject.ai_project.infrastructure.out.ffmpeg;
 
 import com.thomrdev.aiproject.ai_project.domain.port.VideoToAudioConverter;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
 
-@ComponentScan
+@Component
 public class FfmpegVideoToAudioConverter implements VideoToAudioConverter {
 
     @Override
