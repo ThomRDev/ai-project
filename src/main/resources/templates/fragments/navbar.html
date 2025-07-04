@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="navbar" th:remove="tag">
+  <nav class="bg-gray-800 text-white px-4 py-3 shadow-md">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-xl font-semibold tracking-wide">🤖 AI Project</h1>
+      <a href="/login" class="flex items-center gap-2 hover:text-gray-300 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+             stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+          <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25V9m-1.5 0h9m-9 0a2.25 2.25 0 00-2.25 2.25v5.25A2.25 2.25 0 007.5 18h9a2.25 2.25 0 002.25-2.25V11.25A2.25 2.25 0 0016.5 9m-9 0V5.25" />
+        </svg>
+        <span class="text-sm font-medium">Login</span>
+      </a>
+    </div>
+  </nav>
+</div>
+</body>
+</html>
