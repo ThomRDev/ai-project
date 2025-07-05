@@ -22,11 +22,11 @@ public class VoskTranscriber implements AudioToTextTranscriber {
 
     @PostConstruct
     public void init() throws IOException {
-//
-//        LibVosk.setLogLevel(LogLevel.WARNINGS);
-//
-//        if (modelPath == null || modelPath.isBlank()) throw new IllegalStateException("VOSK_MODEL_PATH is not set");
-//        model = new Model(modelPath);
+
+        LibVosk.setLogLevel(LogLevel.WARNINGS);
+
+        if (modelPath == null || modelPath.isBlank()) throw new IllegalStateException("VOSK_MODEL_PATH is not set");
+        model = new Model(modelPath);
     }
 
     @Override
