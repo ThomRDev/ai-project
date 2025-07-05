@@ -6,9 +6,10 @@
     <title layout:title="Login" />
 </head>
 
-<body th:fragment="loginFragment" class="bg-gray-100 flex items-center justify-center min-h-screen">
+<body layout:fragment="content">
+<div class="bg-gray-100 flex items-center justify-center min-h-screen absolute" id="modal-container">
 
-<div id="login-modal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+<div id="login-modal" th:fragment="loginModal" class="fixed inset-0 flex items-center justify-center bg-gray-900">
     <div class="bg-white shadow-md rounded-lg p-8 w-full max-w-lg">
 
         <h1 class="text-2xl font-bold text-center mb-4">Iniciar Sesión</h1>
@@ -16,8 +17,6 @@
         <p class="text-gray-600 text-center mb-6">
             Accede a tu cuenta para continuar.
         </p>
-
-        <div th:replace="~{error :: errorMessage}"></div>
 
         <form th:action="@{/login}" th:method="post" th:object="${user}">
 
@@ -55,6 +54,6 @@
 
     </div>
 </div>
-
+</div>
 </body>
 </html>

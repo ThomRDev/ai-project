@@ -37,6 +37,20 @@ dropContainer.addEventListener('dragleave', (e) => {
 });
 
 dropContainer.addEventListener('drop', (e) => {
+    e.preventDefault()
+
+  const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        const droppedFile = files[0];
+
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(droppedFile);
+        fileInput.files = dataTransfer.files;
+
+        const changeEvent = new Event('change', { bubbles: true });
+        fileInput.dispatchEvent(changeEvent);
+
+      }
  })
 
 document.getElementById("form")?.addEventListener("submit", event => {
@@ -50,14 +64,27 @@ document.getElementById("form")?.addEventListener("submit", event => {
 
     fetch("/upload", {
       method: "POST",
-      body: formData
+      body: formData,
+      credentials: "include",
+    headers: {
+      "X-Requested-With": "XMLHttpRequest"
+    }
     })
     .then(response => {
       if (!response.ok) throw new Error("Error en el upload");
       return response.text();
     })
     .then(data => {
-      console.log("Respuesta del servidor:", data);
+         const parser = new DOMParser();
+         const doc = parser.parseFromString(data, "text/html");
+         const loginModal = doc.querySelector("#modal-container");
+         doc.querySelector("#login-modal")?.classList.remove("bg-gray-900")
+         doc.querySelector("#login-modal")?.classList.add("bg-gray-900/70")
+         if (loginModal) {
+           const container = document.getElementById("modal");
+           container.innerHTML = "";
+           container.appendChild(loginModal);
+         }
     })
     .catch(error => {
       console.error("Error al subir el archivo:", error);

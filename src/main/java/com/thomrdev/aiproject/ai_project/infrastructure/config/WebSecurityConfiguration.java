@@ -1,13 +1,10 @@
 package com.thomrdev.aiproject.ai_project.infrastructure.config;
 
 import com.thomrdev.aiproject.ai_project.infrastructure.persistence.UserRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
@@ -22,18 +19,6 @@ import org.springframework.security.web.SecurityFilterChain;
 public class WebSecurityConfiguration {
 
     private final UserRepository userRepository;
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
-
-    @Bean
-    public AuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService());
-        provider.setPasswordEncoder(passwordEncoder());
-        return provider;
-    }
 
     @Bean
     public UserDetailsService userDetailsService(){
@@ -71,7 +56,15 @@ public class WebSecurityConfiguration {
                                         .requestMatchers("/new-account").permitAll()
                                         .requestMatchers("/admin").hasRole("ADMINISTRATOR")
                                         .requestMatchers("/js/**", "/css/**", "/images/**").permitAll()
+                                        .requestMatchers("/h2-console/**").permitAll()
                                         .anyRequest().authenticated()
+                )
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.setContentType("text/html;charset=UTF-8");
+                            request.getRequestDispatcher("/login").forward(request, response);
+                        })
                 )
 //                ambos necesitan de un form con action
                 .formLogin(form -> form
@@ -81,7 +74,8 @@ public class WebSecurityConfiguration {
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")
-                        .permitAll());
+                        .permitAll())
+        ;
         return http.build();
     }
 }
