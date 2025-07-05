@@ -1,0 +1,1 @@
+Inspired by [@nicosal1080](https://github.com/nicosal1080)

@@ -1,0 +1,2 @@
+INSERT INTO app_user  (username, name, email, password, role) VALUES ('lmarquez', 'luis márquez', 'lmarquez@example.com', '$2a$10$R5ZiZe2zWVhvQoZu1TinJeRS.thTRmgM.fYEuzZHNwpNHjlVBSWNa', 'CUSTOMER');
+INSERT INTO app_user  (username, name, email, password, role) VALUES ('mhernandez', 'menganito hernández', 'mhernandez@example.com', '$2a$10$jp8iquIDjg.lqr/4VmYoceLzWgfoiCIcxk2.JZkIE6xGht0Ezv4Ta', 'ADMINISTRATOR');
