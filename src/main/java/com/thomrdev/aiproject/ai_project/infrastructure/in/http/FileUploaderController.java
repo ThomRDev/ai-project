@@ -1,5 +1,6 @@
 package com.thomrdev.aiproject.ai_project.infrastructure.in.http;
 
+import com.thomrdev.aiproject.ai_project.domain.usecases.AnalyzeMessageUseCase;
 import com.thomrdev.aiproject.ai_project.domain.usecases.ExtractTextFromVideoUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class FileUploaderController {
     private final ExtractTextFromVideoUseCase extractTextFromVideoUseCase;
+    private final AnalyzeMessageUseCase analyzeMessageUseCase;
+
     @GetMapping("/")
     public String viewHome() {
         return "index";
@@ -25,6 +28,7 @@ public class FileUploaderController {
 
         try {
             String transcribedAudio = extractTextFromVideoUseCase.extractText(file.getBytes(), file.getOriginalFilename());
+            String analyzedMessage = analyzeMessageUseCase.execute(transcribedAudio);
 
             model.addAttribute("errorMessage", null);
             model.addAttribute("transcript", transcribedAudio);

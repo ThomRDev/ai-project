@@ -1,6 +1,8 @@
 package com.thomrdev.aiproject.ai_project.infrastructure.config;
 
 import com.thomrdev.aiproject.ai_project.domain.port.AudioToTextTranscriber;
+import com.thomrdev.aiproject.ai_project.domain.port.MessageAnalyzer;
+import com.thomrdev.aiproject.ai_project.infrastructure.out.strategy.MessageAnalysisStrategy;
 import com.thomrdev.aiproject.ai_project.infrastructure.out.strategy.TranscriberStrategy;
 import com.thomrdev.aiproject.ai_project.infrastructure.out.vosk.VoskTranscriber;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +42,18 @@ public class BeanConfiguration {
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("No strategy for: " + engineTranscriber))
                 .transcribe(audioFile);
+    }
+
+    @Bean
+    public MessageAnalyzer messageAnalyzer(
+            List<MessageAnalysisStrategy> strategies,
+            @Value("${ai.engine}") String engine
+    ) {
+        return messageJson -> strategies.stream()
+                .filter(s -> s.supports(engine))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No strategy for engine: " + engine))
+                .analyze(messageJson);
     }
 }
 

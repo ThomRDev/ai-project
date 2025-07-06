@@ -1,0 +1,10 @@
+services:
+  app:
+    build: .
+    image: mi-app:latest
+    ports:
+      - "8080:8080"
+    environment:
+      VOSK_MODEL_PATH: /app/models/vosk-model-small-es-0.42
+      TRANSCRIBER_ENGINE: vosk
+      APP_PORT: 8080
